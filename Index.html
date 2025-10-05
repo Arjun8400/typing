@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Text</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #656464;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 700px;
+            max-height: 95%;
+            background: #f0efef;
+            margin: 12px;
+            padding: 12px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 5px 5px 15px rgba(2, 2, 2, 0.928);
+
+        }
+
+        h1 {
+            color: rgb(155, 120, 7);
+            margin-bottom: 12px;
+        }
+
+        label {
+            font-size: 20px;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        #dificulty {
+            font-size: 16px;
+            cursor: pointer;
+            outline: none;
+            border: none;
+            background: #f0efef;
+        }
+
+        #input-display {
+            width: 100%;
+            height: 60px;
+            background: #dfd0d0;
+            margin: 12px 0;
+            padding: 6px;
+            font-size: 20px;
+            border-radius: 10px;
+        }
+        #input-text{
+            width: 100%;
+            height: 60px;
+            margin-bottom: 12px;
+            padding: 6px;
+            font-size: 20px;
+            border-radius: 10px;
+        }
+        .stats{
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .stats-box{
+            width: 30%;
+            background: #4b3c3c;
+            padding: 10px;
+            color: white;
+            border-radius: 8px;
+        }
+        button{
+            padding: 10px ;
+            margin: 12px;
+            width: 150px;
+            border-radius: 8px;
+            background: green;
+            color: white;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Typing Text 😎</h1>
+        <label for=""> Deficulty :
+            <select name="" id="dificulty">
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+        </label>
+        <div id="input-display">text</div>
+        <textarea name="" id="input-text"></textarea>
+        <div class="stats">
+            <div class="stats-box">Time : <span id="timer">30</span>s</div>
+            <div class="stats-box">WPS : <span id="wps">0</span></div>
+            <div class="stats-box">Accurancy : <span id="accurancy">0</span>%</div>
+        </div>
+        <button id="start-btn">Start Test</button><button id="theme-btn">Toggle Theme ✌</button>
+    </div>
+</body>
+<script>
+    let startBtn = document.getElementById("start-btn")
+    let themeBtn = document.getElementById("theme-btn")
+    let timer = document.getElementById("timer")
+    let wps = document.getElementById("wps")
+    let accurancy =document.getElementById("accurancy")
+    let display = document.getElementById("input-display")
+    let inputText = document.getElementById("input-text")
+    let dificulty = document.getElementById("dificulty")
+    
+</script>
+
+</html>
