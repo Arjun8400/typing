@@ -88,7 +88,14 @@
             background: green;
             color: white;
         }
-        
+        .correct{
+            color: green;
+
+        }
+        .incorrect{
+            color: red;
+            text-decoration: underline;
+        }
     </style>
 </head>
 
@@ -103,24 +110,137 @@
             </select>
         </label>
         <div id="input-display">text</div>
+        <!-- Input Text -->
         <textarea name="" id="input-text"></textarea>
+
         <div class="stats">
-            <div class="stats-box">Time : <span id="timer">30</span>s</div>
+            <div class="stats-box">Time : <span id="timer">0</span>s</div>
             <div class="stats-box">WPS : <span id="wps">0</span></div>
             <div class="stats-box">Accurancy : <span id="accurancy">0</span>%</div>
         </div>
         <button id="start-btn">Start Test</button><button id="theme-btn">Toggle Theme ✌</button>
     </div>
+    
 </body>
 <script>
-    let startBtn = document.getElementById("start-btn")
-    let themeBtn = document.getElementById("theme-btn")
-    let timer = document.getElementById("timer")
-    let wps = document.getElementById("wps")
-    let accurancy =document.getElementById("accurancy")
-    let display = document.getElementById("input-display")
-    let inputText = document.getElementById("input-text")
-    let dificulty = document.getElementById("dificulty")
+    const texts = {
+        easy: [
+            "The quick brown fox jumps over the lazy dog.",
+            "Typing fast is fun.",
+            "Hello woorld form Javascript."
+        ],
+        medium: [
+            "All sentences within the paragraph should relate to and develop one central topic.",
+            "Determine the one point you want to convey in the paragraph.",
+            "Write a sentence that clearly states this main idea."
+        ],
+        hard : [
+            "Follow up with several sentences that provide evidence, examples, or explanations.",
+            "End the paragraph by either summarizing the idea or by bridging to the next paragraph's topic.",
+            "Ideas are connected logically between sentences and across paragraphs, ensuring a smooth flow for the reader."
+        ]
+
+    }
+
+    const startBtn = document.getElementById("start-btn")
+    const themeBtn = document.getElementById("theme-btn")
+    const timerEl = document.getElementById("timer")
+    const wpsEl = document.getElementById("wps")
+    const accurancyEl =document.getElementById("accurancy")
+    const textDisplay = document.getElementById("input-display")
+    const textInput = document.getElementById("input-text")
+    const dificultyEl = document.getElementById("dificulty")
+
+    let timer = 30, timeIntraval, isRunning = false
+    
+    let currentText = "", typedCharecters = 0 , correctCharecter = 0
+
+
+    function stastTest(){
+        //? Improtent Elements 
+        timer =30
+        typedCharecters = 0
+        correctCharecter = 0
+        isRunning = true 
+
+        // ? Display aria work
+        let diff = dificultyEl.value       
+        currentText = texts[diff][Math.floor(Math.random()*texts[diff].length)]
+        textDisplay.textContent = currentText
+
+
+        //! Input Type aria
+        textInput.value = ""
+        textInput.disabled = false
+        textInput.focus()
+
+        // Timer, wps and accurancy aria work 
+        timerEl.textContent = timer
+        wpsEl.textContent = 0
+        accurancyEl.textContent = 0
+
+        clearInterval(timeIntraval)
+        // Time ko update Karna
+        timeIntraval = setInterval(updateTimer, 1000)
+    }
+
+    function updateTimer (){
+        if (timer > 0){
+            timer--
+            timerEl.textContent = timer
+        }else{
+            endText()
+        }
+    }
+
+    function endText(){
+        clearInterval(timeIntraval)
+        textInput.disabled = true
+        isRunning = false
+    }
+
+
+    function culculateResult(){
+        let words = textInput.value.trim().split(`/\s+/`).length
+        let spentTime = 30-timer
+        
+        let wps = spentTime > 0 ?( words/spentTime).toFixed(2): 0
+        let accurancy = Math.round((correctCharecter/typedCharecters)*100)
+
+        wpsEl.textContent = wps
+
+        accurancyEl.textContent = accurancy
+    }
+
+
+    textInput.addEventListener("input", ()=>{
+        let inputText = textInput.value
+        typedCharecters++;
+        correctCharecter = 0
+        let highlighted = ""
+        for(let i = 0 ; i < currentText.length; i++){
+            if(i<inputText.length){
+                if(inputText[i]=== currentText[i]){
+                    correctCharecter++;
+                    highlighted+= `<span class="correct">${currentText[i]}</span>`
+                }else{
+                    highlighted+= `<span class="incorrect">${currentText[i]}</span>`
+                    
+                }
+            }else{
+                    highlighted+= currentText[i]
+            }
+        }
+        textDisplay.innerHTML = highlighted;
+        culculateResult()
+
+    })
+
+    startBtn.addEventListener("click", stastTest)
+
+
+    // stastTest()
+
     
 </script>
 
